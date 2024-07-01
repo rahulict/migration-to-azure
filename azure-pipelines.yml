@@ -17,12 +17,10 @@ stages:
   jobs:
   - job: Init
     steps:
-    - task: AzureCLI@2
-      inputs:
-        azureSubscription: $(azureSubscription)
-        scriptType: 'bash'
-        scriptLocation: 'inlineScript'
-        inlineScript: |
-          terraform version
-          terraform init
-          terraform validate
+    - checkout: self
+    - script: |
+        echo "Setting environment variables for Terraform..."
+        
+        echo "Initializing Terraform..."
+        terraform init
+      displayName: 'Terraform Init'
