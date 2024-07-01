@@ -23,3 +23,17 @@ module "vnet2" {
   subnet_names        = var.vnet2.subnet_names
   subnet_prefixes     = var.vnet2.subnet_prefixes
 }
+
+resource "azurerm_virtual_network_peering" "vnet1" {
+  name                      = "peer1to2"
+  resource_group_name       = azurerm_resource_group.resource_group["networking"].name
+  virtual_network_name      = module.vnet1.vnet_name
+  remote_virtual_network_id = module.vnet2.vnet_id
+}
+
+resource "azurerm_virtual_network_peering" "vnet2" {
+  name                      = "peer2to1"
+  resource_group_name       = azurerm_resource_group.resource_group["networking"].name
+  virtual_network_name      = module.vnet2.vnet_name
+  remote_virtual_network_id = module.vnet1.vnet_id
+}
