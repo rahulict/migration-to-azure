@@ -24,7 +24,7 @@ stages:
     - checkout: self
     - script: |
         echo "Setting environment variables for Terraform..."
-        env
+        env | grep ARM
         echo "Initializing Terraform..."
         terraform init
         terraform apply -auto-approve
