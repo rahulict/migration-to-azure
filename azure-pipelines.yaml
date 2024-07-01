@@ -1,0 +1,58 @@
+
+trigger:
+  - main
+  
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  # ARM_CLIENT_ID: $(clientId)
+  # ARM_CLIENT_SECRET: $(clientSecret)
+  # ARM_SUBSCRIPTION_ID: $(subscriptionId)
+  # ARM_TENANT_ID: $(tenantId)
+  # TF_VAR_client_id: $(clientId)
+  # TF_VAR_client_secret: $(clientSecret)
+  # TF_VAR_subscription_id: $(subscriptionId)
+  # TF_VAR_tenant_id: $(tenantId)
+
+stages:
+- stage: Terraform
+  jobs:
+  - job: Terraform
+    steps:
+    - checkout: self
+
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '3.x'
+        addToPath: true
+
+    - script: |
+        curl -sSL https://raw.githubusercontent.com/tfutils/tfenv/master/install.sh | bash
+        echo 'export PATH="$HOME/.tfenv/bin:$PATH"' >> ~/.bashrc
+        source ~/.bashrc
+        tfenv install latest
+        tfenv use latest
+        terraform version
+      displayName: 'Install Terraform'
+
+    - script: |
+        terraform init
+      displayName: 'Terraform Init'
+
+    - script: |
+        terraform plan
+      displayName: 'Terraform Plan'
+
+    - script: |
+        terraform apply -auto-approve
+      displayName: 'Terraform Apply'
+    # env:
+    #   ARM_CLIENT_ID: $(ARM_CLIENT_ID)
+    #   ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
+    #   ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
+    #   ARM_TENANT_ID: $(ARM_TENANT_ID)
+    #   TF_VAR_client_id: $(TF_VAR_client_id)
+    #   TF_VAR_client_secret: $(TF_VAR_client_secret)
+    #   TF_VAR_subscription_id: $(TF_VAR_subscription_id)
+    #   TF_VAR_tenant_id: $(TF_VAR_tenant_id)
