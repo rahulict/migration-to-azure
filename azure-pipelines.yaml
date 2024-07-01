@@ -5,7 +5,7 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-variables:
+# variables:
   # ARM_CLIENT_ID: $(clientId)
   # ARM_CLIENT_SECRET: $(clientSecret)
   # ARM_SUBSCRIPTION_ID: $(subscriptionId)
