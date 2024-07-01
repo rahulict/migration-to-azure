@@ -9,13 +9,10 @@ trigger:
 pool:
   vmImage: ubuntu-20.04
 
-variables:
-  azureSubscription: 'devops-integration-with-varshit-subscription'
-
 stages:
 - stage: TerraformInit
   variables:
-    azureSubscription: $(azureSubscription)
+    azureSubscription: 'devops-integration-with-varshit-subscription'
   jobs:
   - job: Init
     steps:
