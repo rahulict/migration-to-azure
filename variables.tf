@@ -8,14 +8,9 @@ variable "env" {
   default = "test"
 }
 
-variable "region" {
+variable "location" {
   type    = string
   default = "eastus"
-}
-
-variable "subscription_id" {
-  type    = string
-  default = "03f869b7-7505-4b61-9287-f320c883399f"
 }
 
 variable "allowed_location_policy_id" {
@@ -31,6 +26,29 @@ variable "resource_groups" {
     "application",
     "database"
   ]
+}
+
+variable "vnet1" {
+  description = "configuration for subnet 1"
+  type = object({
+    name = string
+    cidr = string
+    subnets = list(object({
+      name = string
+      address_prefix = string
+    }))
+  })
+}
+
+variable "vnet2" {
+  type = object({
+    name = string
+    cidr = string
+    subnets = list(object({
+      name = string
+      address_prefix = string
+    }))
+  })
 }
 
 variable "vnet_cidr" {

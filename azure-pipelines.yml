@@ -10,7 +10,11 @@ pool:
   vmImage: ubuntu-20.04
 
 variables:
-  azureSubscription: 'devops-integration-with-varshit-subscription' 
+  azureSubscription: 'devops-integration-with-varshit-subscription'
+  ARM_CLIENT_ID: $(clientId)
+  ARM_CLIENT_SECRET: $(clientSecret)
+  ARM_SUBSCRIPTION_ID: $(subscriptionId)
+  ARM_TENANT_ID: $(tenantId)
 
 stages:
 - stage: TerraformInit
@@ -20,10 +24,7 @@ stages:
     - checkout: self
     - script: |
         echo "Setting environment variables for Terraform..."
-        export ARM_CLIENT_ID=$(clientId)
-        export ARM_CLIENT_SECRET=$(clientSecret)
-        export ARM_SUBSCRIPTION_ID=$(subscriptionId)
-        export ARM_TENANT_ID=$(tenantId)
+
         
         echo "Initializing Terraform..."
         terraform init
