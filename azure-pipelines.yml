@@ -9,11 +9,21 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+stages:
+- stage: TerraformInit
+  jobs:
+  - job: Init
+    steps:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '3.x'
+        addToPath: true
+    - script: |
+        curl -sSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+        sudo apt-add-repository "deb https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+        sudo apt-get update && sudo apt-get install terraform
+      displayName: 'Install Terraform'
+    - script: terraform init
+      displayName: 'Terraform Init'
+    - script: terraform validate
+      displayName: 'Terraform Validate'
