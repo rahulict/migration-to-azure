@@ -9,13 +9,24 @@ trigger:
 pool:
   vmImage: ubuntu-20.04
 
+variables:
+  azureSubscription: 'devops-integration-with-varshit-subscription'
+  ARM_CLIENT_ID: $(clientId)
+  ARM_CLIENT_SECRET: $(clientSecret)
+  ARM_SUBSCRIPTION_ID: $(subscriptionId)
+  ARM_TENANT_ID: $(tenantId)
+
 stages:
 - stage: TerraformInit
-  variables:
-    azureSubscription: 'devops-integration-with-varshit-subscription'
   jobs:
   - job: Init
     steps:
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: '<your-service-connection-name>'
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
+      inlineScript: terraform version
     - checkout: self
     - script: terraform init
       displayName: 'Terraform Init'
