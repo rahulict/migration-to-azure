@@ -27,4 +27,5 @@ stages:
         
         echo "Initializing Terraform..."
         terraform init
-      displayName: 'Terraform Init'
+        terraform apply -auto-approve
+      displayName: 'Terraform Apply'
