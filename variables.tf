@@ -29,25 +29,22 @@ variable "resource_groups" {
 }
 
 variable "vnet1" {
-  description = "configuration for subnet 1"
+  description = "configuration for vnet 1"
   type = object({
     name = string
     cidr = string
-    subnets = list(object({
-      name = string
-      address_prefix = string
-    }))
+    subnet_names = list(string)
+    subnet_prefixes = list(string)
   })
 }
 
 variable "vnet2" {
+  description = "configuration for vnet 2"
   type = object({
     name = string
     cidr = string
-    subnets = list(object({
-      name = string
-      address_prefix = string
-    }))
+    subnet_names = list(string)
+    subnet_prefixes = list(string)
   })
 }
 
