@@ -6,7 +6,7 @@ terraform {
     }
   }
   backend "azurerm" {
-    resource_group_name  = "studentResourceGroup"
+    resource_group_name  = "studentRsForLearning"
     storage_account_name = "stforterraformstatefile"
     container_name       = "tfstatefile"
     key                  = "terraform.tfstate"

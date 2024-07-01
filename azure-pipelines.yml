@@ -10,7 +10,7 @@ pool:
   vmImage: ubuntu-20.04
 
 variables:
-  azureSubscription: 'devops-integration-with-varshit-subscription'
+  azureSubscription: 'devops-integration-with-varshit-subscription' 
 
 stages:
 - stage: TerraformInit
