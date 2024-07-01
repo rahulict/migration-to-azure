@@ -7,22 +7,14 @@ trigger:
 - main
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: ubuntu-20.04
 
 stages:
 - stage: TerraformInit
   jobs:
   - job: Init
     steps:
-    - task: UsePythonVersion@0
-      inputs:
-        versionSpec: '3.x'
-        addToPath: true
-    - script: |
-        curl -sSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
-        sudo apt-add-repository "deb https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-        sudo apt-get update && sudo apt-get install terraform
-      displayName: 'Install Terraform'
+    - checkout: self
     - script: terraform init
       displayName: 'Terraform Init'
     - script: terraform validate
